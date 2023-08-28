@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CounterScreen extends StatelessWidget {
+class CounterScreen extends StatefulWidget {
   const CounterScreen({super.key});
 
+  @override
+  State<CounterScreen> createState() => _CounterScreenState();
+}
+
+class _CounterScreenState extends State<CounterScreen> {
+  int contador = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,29 +17,62 @@ class CounterScreen extends StatelessWidget {
           child: Text('Contador'),
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '10',
-              style: TextStyle(
+              '$contador',
+              style: const TextStyle(
                 fontSize: 80,
                 fontWeight: FontWeight.w200,
               ),
             ),
             Text(
-              'Número de clicks',
-              style: TextStyle(
+              'Click${contador == 1 ? '' : 's'}',
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.plus_one),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              contador++;
+              //Reenderizar pantalla
+              setState(() {});
+            },
+            child: const Icon(Icons.plus_one),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            shape: const StadiumBorder(),
+            onPressed: () {
+              contador < 1 ? contador = 0 : contador--;
+              //Reenderizar pantalla
+              setState(() {});
+            },
+            child: const Icon(Icons.exposure_minus_1),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            shape: const StadiumBorder(),
+            onPressed: () {
+              contador = 0;
+              //Reenderizar pantalla
+              setState(() {});
+            },
+            child: const Icon(Icons.refresh_outlined),
+          ),
+        ],
       ),
     );
   }
